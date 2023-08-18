@@ -25,14 +25,19 @@ class Vote(models.Model):
     def generate_otp(self, valid_duration_minutes):
         secret_key= pyotp.random_base32()
         totp = pyotp.TOTP(secret_key, digits=6)
-        self.otp_token = totp.now()
+        self.otp = totp.now()
         self.otp_valid_until = timezone.now() + timezone.timedelta(seconds=valid_duration_minutes*60)
         self.save()
-        send_otp_mail(self.otp_token, self.voter.email)
-        return self.otp_token
+        send_otp_mail(self.otp, self.voter.email)
+        return self.otp
     
-    def verify_otp(self, token):
-        if timezone.now() <= self.otp_valid_until and str(self.otp_token) == token:
+    def verify_otp_expired(self):
+        if timezone.now() > self.otp_valid_until:
+            return True
+        else:
+            return False
+    def verify_otp_correct(self, token):
+        if str(self.otp) != token:
             return True
         else:
             return False
