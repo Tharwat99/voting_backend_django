@@ -10,6 +10,8 @@ class Poll(models.Model):
     expiry_date = models.DateTimeField()
 
     def is_expired(self):
+        print(self.expiry_date)
+        print(timezone.now())
         return self.expiry_date < timezone.now()
     
     def __str__(self):
