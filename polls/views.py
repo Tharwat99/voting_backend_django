@@ -1,7 +1,7 @@
 from rest_framework import generics, filters, permissions
 from django_filters.rest_framework import DjangoFilterBackend
 from . models import Poll
-from .serializers import ListPollSerializer, CreatePollSerializer
+from .serializers import ListPollSerializer
 from .paginations import PollsListPagination
 from .filters import PollsListFilter
 
@@ -12,11 +12,6 @@ class PollListAPIView(generics.ListAPIView):
     pagination_class = PollsListPagination
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     filterset_class = PollsListFilter
-
-class PollListAPIView(generics.CreateAPIView):
-    serializer_class = CreatePollSerializer
-    queryset = Poll.objects.all()
-    permission_classes = [permissions.AllowAny]
 
 # class PollListAPIView(generics.ListAPIView):
 #     serializer_class = PollSerializer
