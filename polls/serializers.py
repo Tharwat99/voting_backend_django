@@ -6,7 +6,7 @@ class ChoiceSerializer(serializers.ModelSerializer):
         model = Choice
         fields = ['id', 'choice_text']
 
-class PollSerializer(serializers.ModelSerializer):
+class ListPollSerializer(serializers.ModelSerializer):
     choices = ChoiceSerializer(many=True)
     class Meta:
         model = Poll
