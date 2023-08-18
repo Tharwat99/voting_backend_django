@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from rest_framework import generics, permissions
+from . models import Vote
+from .serializers import CreateVoteSerializer
 
-# Create your views here.
+class CreateVoteAPIView(generics.CreateAPIView):
+    serializer_class = CreateVoteSerializer
+    queryset = Vote.objects.all()
+    permission_classes = [permissions.AllowAny]

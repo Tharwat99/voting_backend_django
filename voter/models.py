@@ -14,3 +14,5 @@ class Vote(models.Model):
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
     choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        unique_together = ['voter', 'poll']
