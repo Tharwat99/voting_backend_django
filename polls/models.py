@@ -11,3 +11,11 @@ class Poll(models.Model):
 
     def is_expired(self):
         return self.expiry_date < timezone.now()
+
+class Choice(models.Model):
+    """
+    Choice Model.
+    """
+    poll = models.ForeignKey(Poll, on_delete=models.CASCADE, related_name='choices')
+    choice_text = models.CharField(max_length=150)
+

@@ -1,8 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from . manager import VoterManager
-from polls.models import Poll
-from choice.models import Choice
+from polls.models import Poll, Choice
 class Voter(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(unique=True)
