@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
+
 class Poll(models.Model):
     """
     Poll Model.
@@ -10,12 +11,10 @@ class Poll(models.Model):
     expiry_date = models.DateTimeField()
 
     def is_expired(self):
-        print(self.expiry_date)
-        print(timezone.now())
         return self.expiry_date < timezone.now()
     
     def __str__(self):
-        return str(self.title)
+        return self.title
 
 class Choice(models.Model):
     """
@@ -25,5 +24,5 @@ class Choice(models.Model):
     choice_text = models.CharField(max_length=150)
     
     def __str__(self):
-        return str(self.choice_text)
+        return self.choice_text
 

@@ -1,6 +1,7 @@
 from . models import Poll
 import django_filters
 
+
 class PollsListFilter(django_filters.FilterSet):
     """ 
     filter Polls using title, description, choice_text and order by expiry_date.
