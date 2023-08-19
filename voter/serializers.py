@@ -8,7 +8,9 @@ class CreateVoteSerializer(serializers.ModelSerializer):
 
     def to_internal_value(self, data):
         voter, created = Voter.objects.get_or_create(email = data['voter'])
+        data._mutable = True
         data['voter'] = voter.id
+        data._mutable = False
         return super().to_internal_value(data)    
     
     class Meta:
