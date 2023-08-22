@@ -7,15 +7,22 @@ class CreateVoteSerializer(serializers.ModelSerializer):
     """
 
     def to_internal_value(self, data):
-        voter, created = Voter.objects.get_or_create(email = data['voter'])
-        data._mutable = True
-        data['voter'] = voter.id
-        data._mutable = False
+        voter_email = data.get('voter', None)
+        if voter_email != None:
+            voter, created = Voter.objects.get_or_create(email = voter_email)
+            voter.vote_set.filter(confirmed = False).delete()
+            if type(data) == dict:
+                data['voter'] = voter.id
+            else:
+                data._mutable = True
+                data['voter'] = voter.id
+                data._mutable = False
         return super().to_internal_value(data)    
     
     class Meta:
         model = Vote
         fields = ['id', 'voter', 'poll', 'choice']
+        extra_kwargs = {'voter': {'required': True}}
     
     def create(self, validated_data):
         """
@@ -30,6 +37,9 @@ class CreateVoteSerializer(serializers.ModelSerializer):
         if poll.is_expired():
             raise serializers.ValidationError("Poll expired to vote.")
         return poll
+    
+    def validate(self, attrs):
+        return super().validate(attrs)
 
 class UpdateVoteSerializer(serializers.ModelSerializer):
     """

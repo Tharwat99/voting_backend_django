@@ -4,7 +4,6 @@ from django.urls import reverse
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.test import APIClient
-from . models import Vote, Voter
 from polls.models import Poll, Choice
 
 class VoteCreateConfirmOTPTestCase(TestCase):
