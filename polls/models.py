@@ -11,6 +11,9 @@ class Poll(models.Model):
     expiry_date = models.DateTimeField()
 
     def is_expired(self):
+        """
+        method to check if poll is expired or not.
+        """
         return self.expiry_date < timezone.now()
     
     def __str__(self):
