@@ -7,7 +7,7 @@ The first thing to do is to clone the repository:
 
 ```sh
 $ git clone https://github.com/Tharwat99/voting_backend_django.git
-$ cd voting_backend
+$ cd voting_backend_django
 ```
 
 Create a virtual environment to install dependencies in and activate it:
