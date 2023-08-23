@@ -6,6 +6,9 @@ from .paginations import PollsListPagination
 from .filters import PollsListFilter
 
 class PollListAPIView(generics.ListAPIView):
+    """
+    Poll list pages of data for poll.
+    """
     serializer_class = ListPollSerializer
     queryset = Poll.objects.order_by('-expiry_date')
     permission_classes = [permissions.AllowAny]

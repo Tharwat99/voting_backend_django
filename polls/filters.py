@@ -1,6 +1,5 @@
-from . models import Poll
 import django_filters
-
+from . models import Poll
 
 class PollsListFilter(django_filters.FilterSet):
     """ 
