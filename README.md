@@ -32,7 +32,7 @@ Then makemigrations and migrate models to sqlite db:
 (env)$ python manage.py migrate
 ```
 ```
-Once `pip` has finished downloading the dependencies and create .env and add the required variables:
+Once `pip` has finished downloading the dependencies:
 ```sh
 (env)$ python manage.py runserver
 ```
