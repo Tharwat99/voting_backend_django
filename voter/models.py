@@ -5,7 +5,9 @@ from polls.models import Poll, Choice
 from .utils import send_otp_mail
 
 class Voter(models.Model):
-
+    """
+    Voter Model.
+    """
     email = models.EmailField(unique=True)
     polls_voted = models.ManyToManyField(Poll, through='Vote')
 
@@ -13,6 +15,9 @@ class Voter(models.Model):
         return str(self.email)
 
 class Vote(models.Model):
+    """
+    Vote Model.
+    """
     voter = models.ForeignKey(Voter, on_delete=models.CASCADE)
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
     choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
@@ -23,6 +28,9 @@ class Vote(models.Model):
 
     
     def generate_otp(self, valid_duration_minutes):
+        """
+        method to generate otp and set otp_validate_until.
+        """
         secret_key= pyotp.random_base32()
         totp = pyotp.TOTP(secret_key, digits=6)
         self.otp = totp.now()
@@ -32,11 +40,17 @@ class Vote(models.Model):
         return self.otp
     
     def verify_otp_expired(self):
+        """
+        method to verfiy otp if expired or not.
+        """
         if timezone.now() > self.otp_valid_until:
             return True
         else:
             return False
     def verify_otp_correct(self, token):
+        """
+        method to verfiy otp if correct or not
+        """
         if str(self.otp) != token:
             return True
         else:

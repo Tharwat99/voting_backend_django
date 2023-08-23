@@ -7,6 +7,11 @@ class CreateVoteSerializer(serializers.ModelSerializer):
     """
 
     def to_internal_value(self, data):
+        """
+        override to_internal_value to handle duplicate votes for same voter 
+        if voter didn't confirm i will delete and create new one
+        else i will the uniquness error raise.
+        """
         voter_email = data.get('voter', None)
         if voter_email != None:
             voter, created = Voter.objects.get_or_create(email = voter_email)
@@ -34,12 +39,13 @@ class CreateVoteSerializer(serializers.ModelSerializer):
     
     
     def validate_poll(self, poll):
+        """
+        override validate_poll field to handle if poll not expired to vote it.
+        """
         if poll.is_expired():
             raise serializers.ValidationError("Poll expired to vote.")
         return poll
     
-    def validate(self, attrs):
-        return super().validate(attrs)
 
 class UpdateVoteSerializer(serializers.ModelSerializer):
     """
@@ -61,6 +67,9 @@ class UpdateVoteSerializer(serializers.ModelSerializer):
     
     
     def validate_otp(self, otp):
+        """
+        override validate_otp field to handle if otp not expired and not wrong before confirm it.
+        """
         if self.instance.verify_otp_expired():
             raise serializers.ValidationError("OTP is expired.")
         elif self.instance.verify_otp_correct(otp):
