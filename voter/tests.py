@@ -10,7 +10,9 @@ class VoteCreateConfirmOTPTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.poll = Poll.objects.create(title='What is the best programming language to use?', description = 'progmming languages', expiry_date=timezone.now() + timedelta(days=1))
-        self.choice = Choice.objects.create(choice_text='Python', poll = self.poll)
+        self.choice = Choice.objects.create(choice_text='Python')
+        self.choice.poll.add(self.poll)
+        self.choice.save()
 
     def test_create_vote_view(self):
         url = reverse('create-vote')
