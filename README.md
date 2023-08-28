@@ -9,7 +9,12 @@ The first thing to do is to clone the repository:
 $ git clone https://github.com/Tharwat99/voting_backend_django.git
 $ cd voting_backend_django
 ```
+You Should also create a .env file and add these variables below inside it to Create an SMTP connection to Gmail:
 
+```sh
+$ USER_NAME = 'your Gmail account here
+$ PASSWORD = 'your Gmail apps password here'
+```
 Create a virtual environment to install dependencies in and activate it:
 
 ```sh
