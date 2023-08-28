@@ -1,13 +1,16 @@
 import smtplib
 import email
+import os
 
 # Create a SMTP connection to Gmail
 smtp_server = 'smtp.gmail.com'
 port = 587
-username = 'sarwatm225@gmail.com'
-password = 'jvqmcnkhrldkpawh'
+username = os.getenv("USER_NAME")
+password = os.getenv("PASSWORD")
 
 def send_otp_mail(otp, receiver_mail):
+    print(os.getenv("USER_NAME"))
+    print(os.getenv("PASSWORD"))
     # Create an email message
     message = email.message_from_string(f'your otp : {otp}')
     message['From'] = 'sarwatm225@gmail.com'
